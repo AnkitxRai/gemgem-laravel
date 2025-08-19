@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,4 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dash');
+Route::prefix('v1')->group(function () {
+    Route::post('/orders', [OrderController::class, 'store']);
+    Route::get('/orders', [OrderController::class, 'index']);
+});
